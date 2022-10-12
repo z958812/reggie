@@ -1,9 +1,85 @@
 package com.lp.reggie.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lp.reggie.common.R;
+import com.lp.reggie.dto.SetmealDto;
+import com.lp.reggie.entity.Category;
+import com.lp.reggie.entity.Setmeal;
+import com.lp.reggie.service.CategoryService;
+import com.lp.reggie.service.SetmealService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * @author lp
- * @date 2022-10-10 15:09
- * @description:套餐管理
+ * @ author lp
+ * @ date 2022-10-10 15:09
+ * @ description:  套餐管理
  */
+@RestController
+@RequestMapping("/setmeal")
 public class SetmealController {
+    @Autowired
+    private SetmealService setmealService;
+    @Autowired
+    private CategoryService categoryService;
+
+    @PostMapping
+    public R<String> save(@RequestBody SetmealDto setmealDto) {
+        setmealService.saveWithDish(setmealDto);
+        return R.success("添加套餐成功");
+    }
+
+    /*
+     * @param page =1 pageSize=10
+     * @return pageInfo
+     * @description 套餐的分页展示
+     */
+    @GetMapping("page")
+    public R<Page<SetmealDto>> page(int page, int pageSize, String name) {
+//        构建分页构造器
+        Page<Setmeal> pageInfo = new Page<>(page, pageSize);
+//      构造条件构造器
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+//      添加条件
+        queryWrapper.like(StringUtils.isNotEmpty(name), Setmeal::getName, name);
+//        查询
+        setmealService.page(pageInfo, queryWrapper);
+//      完善查询
+        Page<SetmealDto> dtoPage = new Page<>(page, pageSize);
+//        分页构造器copy
+        BeanUtils.copyProperties(pageInfo, dtoPage);
+        List<Setmeal> setmeals = pageInfo.getRecords();
+        List<SetmealDto> setmealDtos = setmeals.stream().map((item) -> {
+//            setmeal copy 到 setmealdto
+            SetmealDto setmealDto = new SetmealDto();
+            BeanUtils.copyProperties(item, setmealDto);
+//            categoryId
+            Long id = item.getCategoryId();
+//            根据categoryId 查category 取出name存入setmealdto
+            Category category = categoryService.getById(id);
+            setmealDto.setCategoryName(category.getName());
+            return setmealDto;
+        }).collect(Collectors.toList());
+        dtoPage.setRecords(setmealDtos);
+        return R.success(dtoPage);
+    }
+
+    /*
+     * @param ids
+     * @return String
+     * @description 根据传入的setmealid 删除套餐
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam List<Long> ids) {
+        setmealService.deleteWithDish(ids);
+        return R.success("套餐删除成功");
+    }
+
+
 }

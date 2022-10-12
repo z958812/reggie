@@ -92,10 +92,27 @@ public class DishController {
      * @description 修改菜品
      */
     @PutMapping
-    public R<String> upadte(@RequestBody DishDto dishDto){
+    public R<String> upadte(@RequestBody DishDto dishDto) {
         dishService.updateWithFlavor(dishDto);
         return R.success("修改菜品成功");
     }
+    /*
+     * @param categoryId
+     * @return list
+     * @description 根据categoryId 查对应菜品
+     */
 
+    @GetMapping("list")
+    public R<List<Dish>> list(Dish dish) {
+//        创建条件构造器
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+//        添加查询条件
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        queryWrapper.eq(Dish::getStatus, 1);
+        queryWrapper.orderByAsc(Dish::getSort).orderByAsc(Dish::getUpdateTime);
+//      查询
+        List<Dish> list = dishService.list(queryWrapper);
+        return R.success(list);
+    }
 
 }
