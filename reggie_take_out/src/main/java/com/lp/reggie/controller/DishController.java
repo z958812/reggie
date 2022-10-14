@@ -1,6 +1,7 @@
 package com.lp.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lp.reggie.common.R;
 import com.lp.reggie.dto.DishDto;
@@ -8,6 +9,7 @@ import com.lp.reggie.entity.Category;
 import com.lp.reggie.entity.Dish;
 import com.lp.reggie.service.CategoryService;
 import com.lp.reggie.service.DishService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
  * @date 2022-10-09 10:35
  * @description:菜品及口味的控制层
  */
+@Slf4j
 @RestController
 @RequestMapping("/dish")
 public class DishController {
@@ -114,5 +117,33 @@ public class DishController {
         List<Dish> list = dishService.list(queryWrapper);
         return R.success(list);
     }
+    /*
+     * @param ids
+     * @return String
+     * @description 根据菜品id删除菜品
+     */
 
+    @DeleteMapping
+    public R<String> delete(@RequestParam List<Long> ids) {
+        log.info("删除菜品功能启动");
+//        删除
+        dishService.removeByIds(ids);
+        return R.success("删除成功");
+    }
+
+    /*
+     * @param ids
+     * @return String
+     * @description 根据id批量修改菜品状态
+     */
+    @PostMapping("status/{status}")
+    public R<String> update(@PathVariable("status") int status, @RequestParam List<Long> ids) {
+//        创建条件构造器
+        LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
+//        添加条件
+        updateWrapper.in(Dish::getId, ids).set(Dish::getStatus, status);
+//       修改状态
+        dishService.update(updateWrapper);
+        return R.success("修改菜品状态成功");
+    }
 }

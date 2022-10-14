@@ -1,6 +1,7 @@
 package com.lp.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lp.reggie.common.R;
 import com.lp.reggie.dto.SetmealDto;
@@ -81,5 +82,20 @@ public class SetmealController {
         return R.success("套餐删除成功");
     }
 
+    /*
+     * @param List<Long>ids
+     * @return String
+     * @description 套餐状态修改
+     */
+    @PostMapping("/status/{status}")
+    public R<String> update(@PathVariable("status") int status, @RequestParam List<Long> ids) {
+//         创建条件构造器
+        LambdaUpdateWrapper<Setmeal> updateWrapper = new LambdaUpdateWrapper<>();
+//         添加条件
+        updateWrapper.in(Setmeal::getId, ids).set(Setmeal::getStatus, status);
+//         更新套餐状态
+        setmealService.update(updateWrapper);
+        return R.success("套餐状态修改成功");
+    }
 
 }
