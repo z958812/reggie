@@ -64,9 +64,9 @@
             prop="name"
           >
             <el-input
-              maxlength="20"
-              placeholder="请填写菜品名称"
-              v-model="ruleForm.name"
+                    placeholder="请填写菜品名称"
+                    v-model="ruleForm.name"
+                    maxlength="20"
             />
           </el-form-item>
           <el-form-item
@@ -74,8 +74,8 @@
             prop="categoryId"
           >
             <el-select
-              placeholder="请选择菜品分类"
-              v-model="ruleForm.categoryId"
+                    v-model="ruleForm.categoryId"
+                    placeholder="请选择菜品分类"
             >
               <el-option :key="index" :label="item.name" :value="item.id" v-for="(item,index) in dishList" />
             </el-select>
@@ -87,8 +87,8 @@
             prop="price"
           >
             <el-input
-              placeholder="请设置菜品价格"
-              v-model="ruleForm.price"
+                    v-model="ruleForm.price"
+                    placeholder="请设置菜品价格"
             />
           </el-form-item>
         </div>
@@ -101,17 +101,17 @@
                 v-if="dishFlavors.length == 0"
               > + 添加口味</span>
               <div
-                class="flavor"
-                v-if="dishFlavors.length != 0"
+                      v-if="dishFlavors.length != 0"
+                      class="flavor"
               >
                 <div class="title">
                   <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
                 </div>
                 <div class="cont">
                   <div
-                    :key="index"
-                    class="items"
-                    v-for="(item, index) in dishFlavors"
+                          v-for="(item, index) in dishFlavors"
+                          :key="index"
+                          class="items"
                   >
                     <div class="itTit">
                       <!-- <SelectInput
@@ -123,25 +123,25 @@
                       <div class="selectInput">
                         <div>
                            <el-input
-                              @blur="outSelect(false,index)"
-                              @focus="selectFlavor(true,index)"
-                              @input="inputHandle(index)"
-                              placeholder="请输入口味"
-                              style="width: 100%"
-                              type="text"
-                              v-model="item.name"
+                                   @blur="outSelect(false,index)"
+                                   placeholder="请输入口味"
+                                   style="width: 100%"
+                                   type="text"
+                                   @focus="selectFlavor(true,index)"
+                                   v-model="item.name"
+                                   @input="inputHandle(index)"
                             />
                         </div>
                         <div class="flavorSelect" v-show="item.showOption">
                           <span
-                            :key="ind"
-                            @click="checkOption(it,ind,index)"
-                            class="items"
-                            v-for="(it, ind) in dishFlavorsData"
+                                  class="items"
+                                  :key="ind"
+                                  v-for="(it, ind) in dishFlavorsData"
+                                  @click="checkOption(it,ind,index)"
                           >{{ it.name }}</span>
                           <span
-                            class="none"
-                            v-if="dishFlavorsData == []"
+                                  v-if="dishFlavorsData == []"
+                                  class="none"
                           >无数据</span>
                         </div>
                       </div>
@@ -151,26 +151,26 @@
                       style="display: flex"
                     >
                       <span
-                        :key="ind"
-                        v-for="(it, ind) in item.value"
+                              v-for="(it, ind) in item.value"
+                              :key="ind"
                       >{{ it }} <i @click="delFlavorLabel(index, ind)">X</i></span>
                       <div
-                        :style="inputStyle"
-                        @focus="flavorPosition(index)"
-                        @keydown.enter="(val)=>keyDownHandle(val,index)"
-                        class="inputBox"
-                        contenteditable="true"
+                              class="inputBox"
+                              :style="inputStyle"
+                              contenteditable="true"
+                              @focus="flavorPosition(index)"
+                              @keydown.enter="(val)=>keyDownHandle(val,index)"
                       ></div>
                     </div>
                     <span
-                      @click="delFlavor(index)"
-                      class="delFlavor delBut non"
+                            class="delFlavor delBut non"
+                            @click="delFlavor(index)"
                     >删除</span>
                   </div>
                 </div>
                 <div
-                  @click="addFlavore"
-                  class="addBut"
+                        class="addBut"
+                        @click="addFlavore"
                 >
                   添加口味
                 </div>
@@ -182,26 +182,26 @@
         </div>
         <div>
           <el-form-item
-            class="uploadImg"
-            label="菜品图片:"
-            prop="region"
+                  label="菜品图片:"
+                  prop="region"
+                  class="uploadImg"
           >
             <el-upload
-              :on-change="onChange"
-              :on-success="handleAvatarSuccess"
-              :show-file-list="false"
-              action="/common/upload"
-              class="avatar-uploader"
-              ref="upload"
+                    :on-change="onChange"
+                    :show-file-list="false"
+                    action="/common/upload"
+                    :on-success="handleAvatarSuccess"
+                    class="avatar-uploader"
+                    ref="upload"
             >
               <img
-                :src="imageUrl"
-                class="avatar"
-                v-if="imageUrl"
+                      v-if="imageUrl"
+                      :src="imageUrl"
+                      class="avatar"
               ></img>
               <i
-                class="el-icon-plus avatar-uploader-icon"
-                v-else
+                      v-else
+                      class="el-icon-plus avatar-uploader-icon"
               ></i>
             </el-upload>
           </el-form-item>
@@ -212,11 +212,11 @@
             prop="region"
           >
             <el-input
-              :rows="3"
-              maxlength="200"
-              placeholder="菜品描述，最长200字"
-              type="textarea"
-              v-model="ruleForm.description"
+                    placeholder="菜品描述，最长200字"
+                    type="textarea"
+                    :rows="3"
+                    v-model="ruleForm.description"
+                    maxlength="200"
             />
           </el-form-item>
         </div>
@@ -226,16 +226,16 @@
               取消
             </el-button>
             <el-button
-              @click="submitForm('ruleForm')"
-              type="primary"
+                    type="primary"
+                    @click="submitForm('ruleForm')"
             >
               保存
             </el-button>
             <el-button
-              @click="submitForm('ruleForm','goAnd')"
-              class="continue"
-              type="primary"
-              v-if="actionType == 'add'"
+                    @click="submitForm('ruleForm','goAnd')"
+                    type="primary"
+                    class="continue"
+                    v-if="actionType == 'add'"
             >
               保存并继续添加菜品
             </el-button>

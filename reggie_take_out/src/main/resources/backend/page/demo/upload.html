@@ -14,11 +14,11 @@
    <div class="addBrand-container" id="food-add-app">
     <div class="container">
         <el-upload :before-upload="beforeUpload"
-                :on-success="handleAvatarSuccess"
-                :show-file-list="false"
-                action="/common/upload"
-                class="avatar-uploader"
-                ref="upload">
+                   action="/common/upload"
+                   :on-success="handleAvatarSuccess"
+                   :show-file-list="false"
+                   class="avatar-uploader"
+                   ref="upload">
             <img :src="imageUrl" class="avatar" v-if="imageUrl"></img>
             <i class="el-icon-plus avatar-uploader-icon" v-else></i>
         </el-upload>

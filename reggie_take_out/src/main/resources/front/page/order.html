@@ -26,10 +26,10 @@
             </div>
             <div class="divBody" v-if="orderList.length > 0">
                 <van-list
-                    :finished="finished"
-                    @load="getList"
-                    finished-text="没有更多了"
-                    v-model="loading"
+                        @load="getList"
+                        :finished="finished"
+                        finished-text="没有更多了"
+                        v-model="loading"
                     >
                     <van-cell :key="index" class="item" v-for="(order,index) in orderList">
                         <div class="timeStatus">

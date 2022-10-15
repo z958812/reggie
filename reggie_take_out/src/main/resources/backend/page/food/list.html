@@ -15,17 +15,17 @@
     <div class="container">
       <div class="tableBar">
         <el-input
-          @keyup.enter.native="handleQuery"
-          clearable
-          placeholder="请输入菜品名称"
-          style="width: 250px"
-          v-model="input"
+                @keyup.enter.native="handleQuery"
+                placeholder="请输入菜品名称"
+                style="width: 250px"
+                clearable
+                v-model="input"
         >
           <i
-            @click="init"
-            class="el-input__icon el-icon-search"
-            slot="prefix"
-            style="cursor: pointer"
+                  @click="init"
+                  class="el-input__icon el-icon-search"
+                  style="cursor: pointer"
+                  slot="prefix"
           ></i>
         </el-input>
         <div class="tableLab">
@@ -33,26 +33,26 @@
           <span @click="statusHandle('1')" class="span-btn blueBug non">批量启售</span>
           <span @click="statusHandle('0')" class="span-btn delBut non" style="border:none;">批量停售</span>
           <el-button
-            @click="addFoodtype('add')"
-            type="primary"
+                  type="primary"
+                  @click="addFoodtype('add')"
           >
             + 新建菜品
           </el-button>
         </div>
       </div>
       <el-table
-        :data="tableData"
-        @selection-change="handleSelectionChange"
-        class="tableBox"
-        stripe
+              :data="tableData"
+              stripe
+              @selection-change="handleSelectionChange"
+              class="tableBox"
       >
         <el-table-column
           type="selection"
           width="25"
         ></el-table-column>
         <el-table-column
-          label="菜品名称"
-          prop="name"
+                prop="name"
+                label="菜品名称"
         ></el-table-column>
         <el-table-column align="center" label="图片" prop="image">
           <template slot-scope="{ row }">
@@ -66,8 +66,8 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="菜品分类"
-          prop="categoryName"
+                prop="categoryName"
+                label="菜品分类"
         ></el-table-column>
         <el-table-column label="售价">
           <template slot-scope="scope">
@@ -80,53 +80,53 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="最后操作时间"
-          prop="updateTime"
+                prop="updateTime"
+                label="最后操作时间"
         >
         </el-table-column>
         <el-table-column
-          align="center"
-          label="操作"
-          width="160"
+                label="操作"
+                width="160"
+                align="center"
         >
           <template slot-scope="scope">
             <el-button
-              @click="addFoodtype(scope.row.id)"
-              class="blueBug"
-              size="small"
-              type="text"
+                    type="text"
+                    @click="addFoodtype(scope.row.id)"
+                    class="blueBug"
+                    size="small"
             >
               修改
             </el-button>
             <el-button
-              @click="statusHandle(scope.row)"
-              class="blueBug"
-              size="small"
-              type="text"
+                    class="blueBug"
+                    size="small"
+                    type="text"
+                    @click="statusHandle(scope.row)"
             >
               {{ scope.row.status == '0' ? '启售' : '停售' }}
             </el-button>
             <el-button
-              @click="deleteHandle('单删', scope.row.id)"
-              class="delBut non"
-              size="small"
-              type="text"
+                    type="text"
+                    @click="deleteHandle('单删', scope.row.id)"
+                    class="delBut non"
+                    size="small"
             >
               删除
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        :current-page.sync="page"
-        :page-size="pageSize"
-        :page-sizes="[10, 20, 30, 40]"
-        :total="counts"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        class="pageList"
-        layout="total, sizes, prev, pager, next, jumper"
-      ></el-pagination>
+        <el-pagination
+                :current-page.sync="page"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="pageSize"
+                @current-change="handleCurrentChange"
+                :total="counts"
+                @size-change="handleSizeChange"
+                class="pageList"
+                layout="total, sizes, prev, pager, next, jumper"
+        ></el-pagination>
     </div>
   </div>
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->

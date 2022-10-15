@@ -14,12 +14,12 @@
   <div class="addBrand-container" id="member-add-app">
     <div class="container">
       <el-form
-        :inline="false"
-        :model="ruleForm"
-        :rules="rules"
-        class="demo-ruleForm"
-        label-width="180px"
-        ref="ruleForm"
+              :inline="false"
+              :model="ruleForm"
+              :rules="rules"
+              label-width="180px"
+              ref="ruleForm"
+              class="demo-ruleForm"
       >
         <el-form-item label="账号:" prop="username">
           <el-input maxlength="20" placeholder="请输入账号" v-model="ruleForm.username"/>
@@ -70,16 +70,16 @@
               取消
             </el-button>
             <el-button
-              @click="submitForm('ruleForm', false)"
-              type="primary"
+                    type="primary"
+                    @click="submitForm('ruleForm', false)"
             >
               保存
             </el-button>
             <el-button
-              @click="submitForm('ruleForm', true)"
-              class="continue"
-              type="primary"
-              v-if="actionType == 'add'"
+                    v-if="actionType == 'add'"
+                    @click="submitForm('ruleForm', true)"
+                    class="continue"
+                    type="primary"
             >
               保存并继续添加
             </el-button>

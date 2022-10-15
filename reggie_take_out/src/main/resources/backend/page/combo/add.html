@@ -166,12 +166,12 @@
     <div class="addBrand-container" id="combo-add-app">
       <div class="container">
         <el-form
-          :inline="true"
-          :model="ruleForm"
-          :rules="rules"
-          class="demo-ruleForm"
-          label-width="180px"
-          ref="ruleForm"
+                :inline="true"
+                :model="ruleForm"
+                :rules="rules"
+                label-width="180px"
+                ref="ruleForm"
+                class="demo-ruleForm"
         >
           <div>
             <el-form-item label="套餐名称:" prop="name" >
@@ -204,11 +204,11 @@
                         <el-table-column align="center" label="份数" prop="address">
                           <template slot-scope="scope">
                             <el-input-number
-                              :max="99"
-                              :min="1"
-                              label="描述文字"
-                              size="small"
-                              v-model="scope.row.copies"
+                                    :max="99"
+                                    size="small"
+                                    :min="1"
+                                    v-model="scope.row.copies"
+                                    label="描述文字"
                             ></el-input-number>
                           </template>
                         </el-table-column>
@@ -249,10 +249,10 @@
               <el-button @click="goBack()"> 取消 </el-button>
               <el-button @click="submitForm('ruleForm', false)" type="primary"> 保存 </el-button>
               <el-button
-                @click="submitForm('ruleForm', true)"
-                class="continue"
-                type="primary"
-                v-if="actionType == 'add'"
+                      @click="submitForm('ruleForm', true)"
+                      type="primary"
+                      class="continue"
+                      v-if="actionType == 'add'"
               >
                 保存并继续添加套餐
               </el-button>
@@ -261,19 +261,19 @@
         </el-form>
       </div>
       <el-dialog
-        :before-close="handleClose"
-        :visible.sync="dialogVisible"
-        class="addDishList"
-        title="添加菜品"
-        width="60%"
+              title="添加菜品"
+              :before-close="handleClose"
+              :visible.sync="dialogVisible"
+              width="60%"
+              class="addDishList"
       >
         <el-input
-          class="seachDish"
-          clearable
-          placeholder="请输入菜品名称进行搜索"
-          size="small"
-          style="width: 250px"
-          v-model="value"
+                clearable
+                class="seachDish"
+                placeholder="请输入菜品名称进行搜索"
+                style="width: 250px"
+                size="small"
+                v-model="value"
         >
           <i @click="seachHandle" class="el-input__icon el-icon-search" slot="prefix" style="cursor: pointer"></i>
         </el-input>
@@ -282,14 +282,14 @@
         <div class="addDishCon">
           <div class="leftCont">
             <div
-              class="tabBut"
-              v-show="seachKey.trim() == ''"
+                    v-show="seachKey.trim() == ''"
+                    class="tabBut"
             >
               <span
-                :class="{act:index == keyInd}"
-                :key="index"
-                @click="checkTypeHandle(index, item.id)"
-                v-for="(item, index) in dishType"
+                      :class="{act:index == keyInd}"
+                      :key="index"
+                      v-for="(item, index) in dishType"
+                      @click="checkTypeHandle(index, item.id)"
               >{{ item.name }}</span>
             </div>
             <div class="tabList">
@@ -298,14 +298,14 @@
                   暂无菜品!
                 </div>
                 <el-checkbox-group
-                  @change="checkedListHandle"
-                  v-if="dishAddList.length > 0"
-                  v-model="checkedList"
+                        v-if="dishAddList.length > 0"
+                        v-model="checkedList"
+                        @change="checkedListHandle"
                 >
                   <div
-                    :key="index"
-                    class="items"
-                    v-for="(item, index) in dishAddList"
+                          v-for="(item, index) in dishAddList"
+                          :key="index"
+                          class="items"
                   >
                     <el-checkbox
                       :key="index"
@@ -328,19 +328,19 @@
             </div>
             <div class="items">
               <div
-                :key="ind"
-                class="item"
-                v-for="(item, ind) in checkedList"
+                      v-for="(item, ind) in checkedList"
+                      :key="ind"
+                      class="item"
               >
                 <span>{{ item.dishName }}</span>
                 <span class="price">￥ {{ Number(item.price)/100 }} </span>
                 <span
-                  @click="delCheck(ind)"
-                  class="del"
+                        class="del"
+                        @click="delCheck(ind)"
                 >
                   <img
-                    alt=""
-                    src="../../images/icons/btn_clean@2x.png"
+                          src="../../images/icons/btn_clean@2x.png"
+                          alt=""
                   >
                 </span>
               </div>
@@ -479,13 +479,13 @@
           },
           // 获取套餐分类
           getDishTypeList() {
-            getCategoryList({ type: 2, page: 1, pageSize: 1000 }).then((res) => {
-              if (res.code === 1) {
-                this.setMealList = res.data.map((obj) => ({ ...obj, idType: obj.id }))
-              } else {
-                this.$message.error(res.msg || '操作失败')
-              }
-            })
+              getCategoryList({type: 2}).then((res) => {
+                  if (res.code === 1) {
+                      this.setMealList = res.data.map((obj) => ({...obj, idType: obj.id}))
+                  } else {
+                      this.$message.error(res.msg || '操作失败')
+                  }
+              })
           },
           // 删除套餐菜品
           delDishHandle(index) {

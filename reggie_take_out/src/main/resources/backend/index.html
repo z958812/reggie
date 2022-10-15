@@ -37,12 +37,12 @@
 
           <el-scrollbar wrap-class="scrollbar-wrapper">
             <el-menu
-              :collapse-transition="false"
-              :default-active="defAct"
-              :unique-opened="false"
-              active-text-color="#f4f4f5"
-              background-color="#343744"
-              text-color="#bfcbd9"
+                    :default-active="defAct"
+                    :unique-opened="false"
+                    :collapse-transition="false"
+                    background-color="#343744"
+                    text-color="#bfcbd9"
+                    active-text-color="#f4f4f5"
             >
               <div :key="item.id" v-for="item in menuList">
                 <el-submenu :index="item.id" v-if="item.children && item.children.length>0">
@@ -51,10 +51,10 @@
                     <span>{{item.name}}</span>
                   </template>
                   <el-menu-item
-                    :index="sub.id"
-                    :key="sub.id"
-                    @click="menuHandle(sub,false)"
-                    v-for="sub in item.children"
+                          v-for="sub in item.children"
+                          :index="sub.id"
+                          :key="sub.id"
+                          @click="menuHandle(sub,false)"
                     >
                     <i :class="iconfont" :class="sub.icon"></i>
                     <span slot="title">{{sub.name}}</span>
@@ -87,14 +87,14 @@
           <div class="app-main" v-loading="loading">
             <div class="divTmp" v-show="loading"></div>
             <iframe
-              :src="iframeUrl"
-              class="c_iframe"
-              frameborder="0"
-              height="auto"
-              id="cIframe"
-              name="cIframe"
-              v-show="!loading"
-              width="100%"
+                    class="c_iframe"
+                    height="auto"
+                    id="cIframe"
+                    :src="iframeUrl"
+                    name="cIframe"
+                    width="100%"
+                    frameborder="0"
+                    v-show="!loading"
             ></iframe>
           </div>
         </div>

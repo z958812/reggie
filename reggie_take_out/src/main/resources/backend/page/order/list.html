@@ -50,15 +50,15 @@
           <i @click="init" class="el-input__icon el-icon-search" slot="prefix" style="cursor: pointer"></i>
         </el-input>
         <el-date-picker :default-time="['00:00:00', '23:59:59']"
-          clearable 
-          end-placeholder="结束日期"
-          placeholder="选择日期"
-          range-separator="至"
-          start-placeholder="开始日期"
-          style="width: 400px;margin-left: 20px;"
-          type="datetimerange"
-          v-model="orderTime"
-          value-format="yyyy-MM-dd HH:mm:ss"
+                        clearable
+                        end-placeholder="结束日期"
+                        type="datetimerange"
+                        placeholder="选择日期"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        v-model="orderTime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        style="width: 400px;margin-left: 20px;"
         ></el-date-picker>
         <el-button @click="init" class="search-btn" type="primary">查询</el-button>
       </div>
@@ -94,24 +94,24 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        :current-page.sync="page"
-        :page-size="pageSize"
-        :page-sizes="[10, 20, 30, 40]"
-        :total="counts"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        class="pageList"
-        layout="total, sizes, prev, pager, next, jumper"
-      ></el-pagination>
+        <el-pagination
+                :current-page.sync="page"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="pageSize"
+                @current-change="handleCurrentChange"
+                class="pageList"
+                :total="counts"
+                @size-change="handleSizeChange"
+                layout="total, sizes, prev, pager, next, jumper"
+        ></el-pagination>
     </div>
 
     <!-- 查看弹框部分 -->
     <el-dialog
-      :before-close="handleClose"
-      :visible.sync="dialogVisible"
-      title="订单信息"
-      width="30%"
+            :before-close="handleClose"
+            :visible.sync="dialogVisible"
+            width="30%"
+            title="订单信息"
     >
       <div class="info-box">
         <div class="item-box">

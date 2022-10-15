@@ -29,7 +29,7 @@ function cartListApi(data) {
     return $axios({
         'url': '/shoppingCart/list',
         'method': 'get',
-        params:{...data}
+        params: {...data}
     })
 }
 

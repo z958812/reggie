@@ -88,7 +88,7 @@ public class SetmealController {
      * @description 套餐状态修改
      */
     @PostMapping("/status/{status}")
-    public R<String> update(@PathVariable("status") int status, @RequestParam List<Long> ids) {
+    public R<String> update(@PathVariable int status, @RequestParam List<Long> ids) {
 //         创建条件构造器
         LambdaUpdateWrapper<Setmeal> updateWrapper = new LambdaUpdateWrapper<>();
 //         添加条件

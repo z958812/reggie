@@ -142,9 +142,9 @@
         </van-popup>
         <van-dialog :show-confirm-button="false"
                     class="detailsDialog"
+                    v-model="detailsDialog.show"
                     ref="detailsDialog"
                     v-if="detailsDialog.show"
-                    v-model="detailsDialog.show"
                     >
           <div class="divContainer">
             <el-image :src="imgPathConvert(detailsDialog.item.image)" >
@@ -176,9 +176,9 @@
         </van-dialog>
         <van-dialog :show-confirm-button="false"
                     class="setMealDetailsDialog"
+                    v-model="setMealDialog.show"
                     ref="setMealDetailsDialogd"
                     v-if="setMealDialog.show"
-                    v-model="setMealDialog.show"
                     >
           <div class="divContainer">
             <div class="title">{{setMealDialog.item.name}}</div>
