@@ -106,11 +106,11 @@ public class DishController {
      */
 
     @GetMapping("list")
-    public R<List<Dish>> list(Dish dish) {
+    public R<List<Dish>> list(@RequestParam Long categoryId) {
 //        创建条件构造器
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
 //        添加查询条件
-        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        queryWrapper.eq(Dish::getCategoryId, categoryId);
         queryWrapper.eq(Dish::getStatus, 1);
         queryWrapper.orderByAsc(Dish::getSort).orderByAsc(Dish::getUpdateTime);
 //      查询

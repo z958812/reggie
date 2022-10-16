@@ -8,6 +8,7 @@ import com.lp.reggie.dto.SetmealDto;
 import com.lp.reggie.entity.Category;
 import com.lp.reggie.entity.Setmeal;
 import com.lp.reggie.service.CategoryService;
+import com.lp.reggie.service.DishService;
 import com.lp.reggie.service.SetmealService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +30,8 @@ public class SetmealController {
     private SetmealService setmealService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private DishService dishService;
 
     @PostMapping
     public R<String> save(@RequestBody SetmealDto setmealDto) {
@@ -97,5 +100,21 @@ public class SetmealController {
         setmealService.update(updateWrapper);
         return R.success("套餐状态修改成功");
     }
+
+    /*
+     * @param categoryId&status=1
+     * @return Setmeal
+     * @description 根据categoryId 和状态查询到Setmeal
+     */
+    @GetMapping("/list")
+    public R<List<Setmeal>> list(@RequestParam("categoryId") Long categoryId, @RequestParam("status") int status) {
+//         查询到套餐中的菜品
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Setmeal::getCategoryId, categoryId);
+        queryWrapper.eq(Setmeal::getStatus, status);
+        List<Setmeal> list = setmealService.list(queryWrapper);
+        return R.success(list);
+    }
+//
 
 }

@@ -62,12 +62,15 @@ public class AddressBookController {
 
     @PutMapping("default")
     public R<String> setDefault(@RequestBody AddressBook addressBook) {
-//        创建条件构造器
+//        找到原先的默认地址并修改
+        LambdaUpdateWrapper<AddressBook> updateWrapperByPast = new LambdaUpdateWrapper<>();
+        updateWrapperByPast.eq(AddressBook::getIsDefault, 1);
+        updateWrapperByPast.set(AddressBook::getIsDefault, 0);
+        addressBookService.update(updateWrapperByPast);
+//        设置默认地址
         LambdaUpdateWrapper<AddressBook> updateWrapper = new LambdaUpdateWrapper<>();
-//        添加条件
         updateWrapper.set(AddressBook::getIsDefault, 1);
         updateWrapper.eq(AddressBook::getId, addressBook.getId());
-//        修改
         addressBookService.update(updateWrapper);
         return R.success("默认地址修改成功");
     }
@@ -89,9 +92,9 @@ public class AddressBookController {
      * @description 编辑收货地址
      */
     @PutMapping
-    public R<String> update(AddressBook addressBook) {
-        return R.success("成功");
-
+    public R<String> update(@RequestBody AddressBook addressBook) {
+        addressBookService.updateById(addressBook);
+        return R.success("收货地址修改成功");
     }
 
 

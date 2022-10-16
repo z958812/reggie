@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +25,10 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     private SetmealDishService setmealDishService;
 
     @Override
-    public void saveWithDish(SetmealDto setmealDto) {
+    public void saveWithDish(@RequestBody SetmealDto setmealDto) {
 //        保存套餐基本信息
         this.save(setmealDto);
-//        获取套餐关联菜品集合,并为集合每个元素赋值套餐idsetmealid
+//        获取套餐关联菜品集合,并为集合每个元素赋值套餐setmealId
         List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
         setmealDishes.stream().map((item) -> {
             item.setSetmealId(setmealDto.getId());
