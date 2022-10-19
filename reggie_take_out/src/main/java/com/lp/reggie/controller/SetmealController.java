@@ -13,6 +13,8 @@ import com.lp.reggie.service.SetmealService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class SetmealController {
     private DishService dishService;
 
     @PostMapping
+    @CacheEvict(value = "setmealCache", allEntries = true)
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         setmealService.saveWithDish(setmealDto);
         return R.success("添加套餐成功");
@@ -80,6 +83,7 @@ public class SetmealController {
      * @description 根据传入的setmealid 删除套餐
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache", allEntries = true)
     public R<String> delete(@RequestParam List<Long> ids) {
         setmealService.deleteWithDish(ids);
         return R.success("套餐删除成功");
@@ -107,14 +111,25 @@ public class SetmealController {
      * @description 根据categoryId 和状态查询到Setmeal
      */
     @GetMapping("/list")
-    public R<List<Setmeal>> list(@RequestParam("categoryId") Long categoryId, @RequestParam("status") int status) {
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId + '_' + #setmeal.status")
+    public R<List<Setmeal>> list(Setmeal setmeal) {
 //         查询到套餐中的菜品
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Setmeal::getCategoryId, categoryId);
-        queryWrapper.eq(Setmeal::getStatus, status);
+        queryWrapper.eq(Setmeal::getCategoryId, setmeal.getCategoryId());
+        queryWrapper.eq(Setmeal::getStatus, setmeal.getStatus());
         List<Setmeal> list = setmealService.list(queryWrapper);
         return R.success(list);
     }
-//
+
+    /*
+     * @param id
+     * @return DishDto
+     * @description 根据id查询套餐信息和对应的口味信息
+     */
+    @GetMapping("/{id}")
+    public R<Setmeal> get(@PathVariable Long id) {
+        Setmeal setmeal = setmealService.getById(id);
+        return R.success(setmeal);
+    }
 
 }
